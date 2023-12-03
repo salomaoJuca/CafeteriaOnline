@@ -1,0 +1,52 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+            <section class="conteudo">
+                <section class="banner">
+                    <img class="banner__imagem" src="{% static '/assets/imagens/Banner_1156x328.png' %}" alt="banner Alura Space">
+                    {% comment %} <h1 class="banner__titulo"> A melhor e mais completa cafeteria do mundo!</h1> {% endcomment %}
+                </section>
+                <section class="tags">
+                    <p class="tags__titulo">Busque por tags:</p>
+                    <ul class="tags__lista">
+                        <li class="tags__tag"><a href="{% url 'filtro' 'QUENTE' %}" class = "btn" style="color: #c9c9c9">Cafés quentes</a></li>
+                        <li class="tags__tag"><a href="{% url 'filtro' 'GELADO' %}" class = "btn" style="color: #c9c9c9">Cafés Gelados</a></li>
+                        <li class="tags__tag"><a href="{% url 'filtro' 'CHA' %}" class = "btn" style="color: #c9c9c9">Chás</a></li>
+                        <li class="tags__tag"><a href="{% url 'filtro' 'PADARIA' %}" class = "btn" style="color: #c9c9c9">Padaria</a></li>
+                        <li class="tags__tag"><a href="{% url 'filtro' 'REFEICAO' %}" class = "btn" style="color: #c9c9c9">Refeições</a></li>
+                    </ul>
+                </section>
+                <section class="galeria">
+                    <div class="cards">
+                        <h2 class="cards__titulo">Produtos disponíveis</h2>
+                        <ul class="cards__lista">
+                            {% if produtos %}
+                                {% for produto in produtos %}
+                                    <li class="card">
+                                        <a href="{% url 'produto' produto.id %}">
+                                            {% if produto.imagem == "" or produto.imagem == null %}
+                                                <img class="card__imagem" src="{% static '/assets/imagens/galeria/ImageNotFound.jpg'%}" alt="foto">
+                                            {% else %}
+                                                <img class="card__imagem" src="{{ produto.imagem.url }}" alt="foto">
+                                            {% endif %}
+                                        </a>
+                                        <div class="card__info">
+                                            <p class="card__titulo">{{produto.denominacao}}</p>
+                                            <div class="card__texto">
+                                                <p class="card__descricao">{{produto.legenda}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <div class = "imagem__texto">
+                                    <p>Produtos não encontrados</p>
+                                </div>
+                            {% endif %}    
+                        </ul>
+                    </div>
+                </section>
+            </section>
+            
+{% endblock %}
